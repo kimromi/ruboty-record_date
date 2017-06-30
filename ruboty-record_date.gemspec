@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ruboty/release_calendar/version"
+require "ruboty/record_date/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruboty-release_calendar"
-  spec.version       = Ruboty::ReleaseCalendar::VERSION
+  spec.name          = "ruboty-record_date"
+  spec.version       = Ruboty::RecordDate::VERSION
   spec.authors       = ["kimromi"]
   spec.email         = ["kimromi4@gmail.com"]
 
-  spec.summary       = %q{release calendar for Ruboty}
-  spec.description   = %q{release calendar for Ruboty}
-  spec.homepage      = "https://github.com/kimromi/ruboty-release_calendar"
+  spec.summary       = %q{record date for Ruboty}
+  spec.description   = %q{record date for Ruboty}
+  spec.homepage      = "https://github.com/kimromi/ruboty-record_date"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

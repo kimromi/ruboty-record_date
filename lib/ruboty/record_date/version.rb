@@ -1,5 +1,5 @@
 module Ruboty
-  module ReleaseCalendar
+  module RecordDate
     VERSION = "0.1.0"
   end
 end
