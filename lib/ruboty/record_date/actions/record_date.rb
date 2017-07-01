@@ -1,5 +1,4 @@
 require 'time'
-require 'securerandom'
 
 module Ruboty
   module RecordDate
@@ -8,8 +7,8 @@ module Ruboty
         NAMESPACE = 'recode-date'
 
         def record
-          id = add(body)
-          message.reply("Recorded! id: #{id} body: #{body}")
+          time = add(body)
+          message.reply("Recorded! time: #{time} body: #{body}")
         end
 
         def list
@@ -17,9 +16,9 @@ module Ruboty
           message.reply("Invalid date `#{date}`") and return unless date
 
           if recorded[date]
-            message.reply(recorded[date].map{|id, body| "(#{id}) #{body}"})
+            message.reply(recorded[date].map{|time, body| "(#{time}) #{body}"})
           else
-            message.reply("Not recorded in #{target}")
+            message.reply("Not recorded in #{date}")
           end
         end
 
@@ -28,10 +27,11 @@ module Ruboty
           message.reply("Invalid date `#{date}`") and return unless date
           message.reply("No record in #{date}") and return unless recorded[date]
 
-          if recorded[date].delete(message[:id])
-            message.reply("#{message[:id]} deleted.")
+          if body = recorded[date][message[:time]]
+            recorded[date].delete(message[:time])
+            message.reply("#{body} deleted.")
           else
-            message.reply("Not exists id `#{message[:id]}`")
+            message.reply("Not exists time `#{message[:time]}`")
           end
         end
 
@@ -46,10 +46,10 @@ module Ruboty
         end
 
         def add(body)
-          id = SecureRandom.hex(3)
+          time = Time.now.strftime('%T:%3N')
           recorded[today] ||= {}
-          recorded[today][id] = body
-          id
+          recorded[today][time] = body
+          time
         end
 
         def today

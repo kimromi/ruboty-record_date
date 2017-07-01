@@ -17,7 +17,7 @@ module Ruboty
       )
 
       on(
-        /record delete (?<date>.+) (?<id>.+)/,
+        /record delete (?<date>.+) (?<time>.+)/,
         name: 'delete',
         description: 'delete record'
       )
