@@ -10,8 +10,34 @@ module Ruboty
         all: true
       )
 
+      on(
+        /record list (?<date>.+)/,
+        name: 'list',
+        description: 'get recorded'
+      )
+
+      on(
+        /record delete (?<date>.+) (?<time>.+)/,
+        name: 'delete',
+        description: 'delete record'
+      )
+
       def record(message)
-        Ruboty::RecordDate::Actions::RecordDate.new(message).record
+        action(message).record
+      end
+
+      def list(message)
+        action(message).list
+      end
+
+      def delete(message)
+        action(message).delete
+      end
+
+      private
+
+      def action(message)
+        Ruboty::RecordDate::Actions::RecordDate.new(message)
       end
     end
   end
