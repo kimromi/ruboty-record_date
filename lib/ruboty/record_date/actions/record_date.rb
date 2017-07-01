@@ -8,7 +8,7 @@ module Ruboty
 
         def record
           time = add(body)
-          message.reply("Recorded! time: #{time} body: #{body}")
+          message.reply("Recorded! time: #{time} body: `#{body}`")
         end
 
         def list
@@ -16,20 +16,20 @@ module Ruboty
           message.reply("Invalid date `#{date}`") and return unless date
 
           if recorded[date]
-            message.reply(recorded[date].map{|time, body| "(#{time}) #{body}"})
+            message.reply(recorded[date].map{|time, body| "(#{time}) #{body}"}.join("\n"))
           else
-            message.reply("Not recorded in #{date}")
+            message.reply("Not recorded in `#{date}`")
           end
         end
 
         def delete
           date = date_string(message[:date])
           message.reply("Invalid date `#{date}`") and return unless date
-          message.reply("No record in #{date}") and return unless recorded[date]
+          message.reply("No record in `#{date}`") and return unless recorded[date]
 
           if body = recorded[date][message[:time]]
             recorded[date].delete(message[:time])
-            message.reply("#{body} deleted.")
+            message.reply("`#{body}` deleted.")
           else
             message.reply("Not exists time `#{message[:time]}`")
           end
