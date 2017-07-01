@@ -4,7 +4,7 @@ module Ruboty
   module RecordDate
     module Actions
       class RecordDate < Ruboty::Actions::Base
-        NAMESPACE = 'recode-date'
+        NAMESPACE = 'record-date'
 
         def record
           time = add(body)
