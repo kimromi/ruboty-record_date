@@ -8,22 +8,30 @@ module Ruboty
         NAMESPACE = 'recode-date'
 
         def record
-          add(body)
-          message.reply("Recorded #{today} - #{body}")
+          id = add(body)
+          message.reply("Recorded! id: #{id} body: #{body}")
         end
 
         def list
-          target = begin
-            Date.parse(message[:date].strip).to_s.gsub(/-/, '/')
-          rescue ArgumentError
-            message.reply("Invalid date `#{message[:date].strip}`")
-            return
-          end
+          date = date_string(message[:date])
+          message.reply("Invalid date `#{date}`") and return unless date
 
-          if recorded[target]
-            message.reply(recorded[target].map{|id, body| "(#{id}) #{body}"})
+          if recorded[date]
+            message.reply(recorded[date].map{|id, body| "(#{id}) #{body}"})
           else
             message.reply("Not recorded in #{target}")
+          end
+        end
+
+        def delete
+          date = date_string(message[:date])
+          message.reply("Invalid date `#{date}`") and return unless date
+          message.reply("No record in #{date}") and return unless recorded[date]
+
+          if recorded[date].delete(message[:id])
+            message.reply("#{message[:id]} deleted.")
+          else
+            message.reply("Not exists id `#{message[:id]}`")
           end
         end
 
@@ -38,12 +46,18 @@ module Ruboty
         end
 
         def add(body)
+          id = SecureRandom.hex(3)
           recorded[today] ||= {}
-          recorded[today][SecureRandom.hex(3)] = body
+          recorded[today][id] = body
+          id
         end
 
         def today
-          Date.today.to_s.gsub(/-/, '/')
+          date_string(Date.today.to_s)
+        end
+
+        def date_string(date)
+          Date.parse(date).to_s.gsub(/-/, '/') rescue false
         end
       end
     end
