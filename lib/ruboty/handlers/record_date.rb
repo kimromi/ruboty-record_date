@@ -11,7 +11,7 @@ module Ruboty
       )
 
       on(
-        /recorded (?<date>.+)/,
+        /record list (?<date>.+)/,
         name: 'list',
         description: 'get recorded'
       )
